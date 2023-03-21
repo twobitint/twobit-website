@@ -1,0 +1,27 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background-color: black;
+    color: white;
+    margin: 0;
+    overflow: hidden;
+}
+
+main {
+    position: fixed;
+    top: 35vh;
+    width: 100vw;
+    text-align: center;
+}
+
+canvas {
+    width: 100vw;
+    height: 100vh;
+}
+
+a {
+    color: #999;
+    margin: 0 10px;
+}
+a:hover {
+    color: white;
+}
