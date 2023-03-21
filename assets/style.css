@@ -8,7 +8,7 @@ body {
 
 main {
     position: fixed;
-    top: 35vh;
+    top: 30vh;
     width: 100vw;
     text-align: center;
 }
@@ -18,10 +18,25 @@ canvas {
     height: 100vh;
 }
 
-a {
+main a {
     color: #999;
-    margin: 0 10px;
+    margin: 0 1rem;
 }
 a:hover {
     color: white;
+}
+
+footer {
+    position: fixed;
+    bottom: 1rem;
+    text-align: center;
+    width: 100vw;
+    color: #aaa;
+}
+
+footer a,
+footer a:visited,
+footer a:hover {
+    color: #aaa;
+    text-decoration: none;
 }
