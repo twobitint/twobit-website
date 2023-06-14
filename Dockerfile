@@ -1,6 +1,6 @@
 # Use the official Rust image.
 # https://hub.docker.com/_/rust
-FROM rust:1.68.0
+FROM rust:1.70.0
 
 # Copy local code to the container image.
 WORKDIR /usr/src/app
@@ -10,4 +10,4 @@ COPY . .
 RUN cargo install --path .
 
 # Run the web service on container startup.
-CMD ["twobit_website"]
+CMD ["twobit-website"]
