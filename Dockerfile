@@ -1,13 +1,17 @@
-# Use the official Rust image.
-# https://hub.docker.com/_/rust
-FROM rust:1.70.0
+# Build frontend assets
+FROM node:18-alpine as assets
+WORKDIR /app
+COPY . .
+RUN npm install && npm run build
 
-# Copy local code to the container image.
+# Build http server
+FROM rust:1.70.0 as server
 WORKDIR /usr/src/app
 COPY . .
+RUN cargo build --release
 
-# Install production dependencies and build a release artifact.
-RUN cargo install --path .
-
-# Run the web service on container startup.
-CMD ["twobit-website"]
+# Serve website
+FROM gcr.io/distroless/cc
+COPY --from=assets /app/dist /dist
+COPY --from=server /usr/src/app/target/release/twobit-website /
+CMD ["./twobit-website"]
