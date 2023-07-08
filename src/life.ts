@@ -1,11 +1,11 @@
-class Game {
+export default class Game {
     
     max = 100
     size = 50
     map = new Map()
 
     // Expects window-space
-    seed(width, height) {
+    seed(width: number, height: number) {
         const x = width / this.size
         const y = height / this.size
         for (let j = 0; j < y; j++) {
@@ -17,16 +17,16 @@ class Game {
         }
     }
 
-    bloom(x, y) {
+    bloom(x: number, y: number) {
         this.map.set(this.key(x, y), 1)
     }
 
-    key(x, y) {
+    key(x: number, y: number) {
         //return x + ',' + y
         return x + y * this.max
     }
 
-    unkey(k) {
+    unkey(k: number) {
         //return k.split(',')
         return [k % this.max, Math.floor(k / this.max)]
     }
@@ -42,7 +42,7 @@ class Game {
             }
             for (const dkey of dead) {
                 const [dx, dy] = this.unkey(dkey)
-                const [dalive, merp] = this.neighbors(dx, dy)
+                const [dalive, _] = this.neighbors(dx, dy)
                 if (dalive.length == 3) {
                     next.set(dkey, 1)
                 }
@@ -52,16 +52,15 @@ class Game {
         this.map = next
     }
 
-    neighbors(x, y) {
+    neighbors(x: number, y: number) {
         const alive = []
         const dead = []
-        let n;
 
         for (let j = -1; j <= 1; j++) {
             for (let i = -1; i <= 1; i++) {
                 if (i != 0 || j != 0) {
                     const key = this.key(x + i, y + j)
-                    if (n = this.map.has(key)) {
+                    if (this.map.has(key)) {
                         alive.push(key)
                     } else {
                         dead.push(key)
@@ -73,7 +72,7 @@ class Game {
         return [alive, dead]
     }
 
-    draw(ctx, width, height) {
+    draw(ctx: CanvasRenderingContext2D, width: number, height: number) {
         ctx.clearRect(0, 0, width, height)
         ctx.fillStyle = "#012201"
         for (const key of this.map.keys()) {
@@ -82,34 +81,3 @@ class Game {
         }
     }
 }
-
-var game
-
-(function () {
-
-    // Globals.
-    const canvas = document.getElementsByTagName("canvas")[0]
-    const ctx = canvas.getContext("2d")
-    game = new Game()
-
-    // Play nice with window resizing.
-    window.addEventListener('resize', resize)
-    function resize() {
-        canvas.width = window.innerWidth
-        canvas.height = window.innerHeight
-        game.draw(ctx)
-    }
-    resize()
-    
-    // Setup world.
-    game.seed(canvas.width, canvas.height)
-
-    // Run game loop.
-    setInterval(loop, 1000)
-    function loop() {
-        game.draw(ctx, canvas.width, canvas.height)
-        game.step()
-    }
-    loop()
-
-})()
