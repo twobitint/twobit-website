@@ -1,5 +1,11 @@
-import './style.css'
 import Game from './life.ts'
+import { dom, library } from '@fortawesome/fontawesome-svg-core'
+import { faInstagram, faMastodon, faGithub, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
+import { faAt } from '@fortawesome/free-solid-svg-icons'
+
+// Add socials icons to the dom.
+library.add(faInstagram, faMastodon, faGithub, faLinkedinIn, faAt)
+dom.watch()
 
 // Globals.
 const game = new Game()
